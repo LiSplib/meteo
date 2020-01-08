@@ -31,7 +31,7 @@
         return `<div class="carousel-item active d-flex">
         <div class="card d-block w-100 bg-dark text-white text-center">
             <img id ="icon" src="${data.current_condition.icon_big}" class="card-img-top" alt="condition météo">
-                <p id="city-temp" class="text-center">${data.current_condition.tmp}</p>
+                <p id="city-temp" class="text-center">${data.current_condition.tmp}°C</p>
                 <p id="cityTempAll" class="text-center">Min ${data.fcst_day_0.tmin}°C \t Max ${data.fcst_day_0.tmax}°C</p>
             <div class="card-body">
                 <h3 class="card-title text-center">${data.city_info.name}</h3>
