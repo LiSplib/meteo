@@ -1,16 +1,19 @@
     const forecastList = document.getElementById('forecast-list');
 
-    function updateWeather(currentCity){
-            fetch(`https://www.prevision-meteo.ch/services/json/${currentCity}`)
+    function updateWeather(myCity){
+            fetch(`https://www.prevision-meteo.ch/services/json/${myCity}`)
             .then(res => res.json())
             .then(data => updateView(data))
             .catch(err => handleError(err));
     }
-    let html = "";
+    
 
     function updateView(data){
+        let html = "";
         html += updateCurrentView(data);
-        updateForecastView(data);
+        html += updateForecastView(data);
+
+        forecastList.innerHTML = html;
     }
 
     function updateCurrentView(data){
@@ -30,18 +33,16 @@
         }
 
     function updateForecastView(data){
-        
-
+        let html = "";
         for(let dayNum = 1; dayNum <= 4; dayNum++){
             html += createForecastItemHtml(data, dayNum);
         }
-        forecastList.innerHTML = html;
+        return html;
     }
 
     function createForecastItemHtml(data, dayNum){
         const dayKey = "fcst_day_" + dayNum;
         const dayData = data[dayKey];
-
         return `
         <div class="carousel-item">
             <div class="card d-block w-100 bg-dark text-white text-center">
@@ -54,38 +55,37 @@
                     <p id="day-timed2" class="text-center">${dayData.day_long} ${dayData.date}</p>
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
     }
-
-        
-    
 
     function handleError(err){
         console.error(err);
     }
 
 
-    const currentCity = 'Toulon';
+    let currentCity = 'Toulon';
+    let myCity = currentCity;
 
-    updateWeather(currentCity);
+    updateWeather(myCity);
 
 
     document.getElementById('search').addEventListener('click', function(){
         let newCityName = document.getElementById('cityName').value;
-        refreshCity(newCityName);
+        myCity = newCityName;
+        refreshCity(myCity);
     });
 
-    function refreshCity(newCityName){
-        updateWeather(newCityName);
+    function refreshCity(myCity){
+        //html = "";
+        updateWeather(myCity);
     }
 
-    function testCity(){
-        fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
-            .then(res => res.json())
-            .then(data => console.log(data))
-            .catch(err => handleError(err));
-    }
+    // function testCity(){
+    //     fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
+    //         .then(res => res.json())
+    //         .then(data => console.log(data))
+    //         .catch(err => handleError(err));
+    // }
 
-    console.log(data.Object)
+    // console.log(data.Object)
 
