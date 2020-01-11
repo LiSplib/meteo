@@ -1,6 +1,14 @@
+#mySearch{
+    padding: 20px;
+}
+
+h3{
+    padding-top: 20px;
+}
+
 .icon{
-    width: 150px!important;
-    height: 150px;
+    width: 125px!important;
+    height: 125px;
 }
 
 .hour{
@@ -9,16 +17,28 @@
     min-width: 150px;
     border: 1px solid white;
     border-radius: 8px;
+    margin: 20px 10px;
 }
 
 footer{
-    display: flex!important;
-    overflow-x: auto;
-    justify-content: center;
+    /* display: flex!important;
+    flex-direction: column;
+    justify-content: center; */
     /* width: 100vw; */
+    text-align: center;
 }
 
 .smallIcon{
     width: 50px;
     height: 50px;
+}
+
+#hourCondition{
+    flex-direction: row;
+    overflow-x: auto;
+    justify-content: center;
+}
+
+#dayInfo{
+    padding: 20px 0 0 0;
 }
