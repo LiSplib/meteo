@@ -2,14 +2,12 @@
     const hourCondition = document.getElementById('hourCondition');
     const dayInfo = document.getElementById('dayInfo');
 
-
     function updateWeather(myCity){
             fetch(`https://www.prevision-meteo.ch/services/json/${myCity}`)
             .then(res => res.json())
             .then(data => updateView(data))
             .catch(err => handleError(err));
     }
-    
 
     function updateView(data){
         let html = "";
@@ -35,8 +33,6 @@
         </div>
         `;
     }
-
-
 
     function updateHourCondition(data){
         let html = "";
@@ -115,10 +111,22 @@
     // function testCity(){
     //     fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
     //         .then(res => res.json())
-    //         .then(cityList => console.log(cityList))
+    //         .then(data => updateCityList(data))
     //         .catch(err => handleError(err));
     // }
 
-    // console.log(cityList.Object)
+    // let villes = [];
+
+    // function updateCityList(data){
+    //         for(let city of data.toString()){
+    //             if(city.country === 'FRA'){
+    //                 return villes.push(city);
+    //             }
+    //         }
+    // }   
+    
+    // updateCityList(data);
+
+    // console.log(villes)
 
     
