@@ -2,3 +2,17 @@ img{
     width: 150px!important;
     height: 150px;
 }
+
+.hour{
+    /* font-size: 20px; */
+    color: white;
+    background: #333;
+    overflow: hidden;
+}
+
+footer{
+    display: flex!important;
+    /* justify-content: space-around; */
+    /* flex-flow: row wrap; */
+    /* width: 100%; */
+}

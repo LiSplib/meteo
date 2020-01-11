@@ -1,4 +1,5 @@
     const forecastList = document.getElementById('forecast-list');
+    const hourCondition = document.getElementById('hourCondition');
 
     function updateWeather(myCity){
             fetch(`https://www.prevision-meteo.ch/services/json/${myCity}`)
@@ -10,10 +11,12 @@
 
     function updateView(data){
         let html = "";
+        // const hourData = [];
+        // hourData.push(data.fcst_day_0.hourly_data);
         html += updateCurrentView(data);
         html += updateForecastView(data);
-
         forecastList.innerHTML = html;
+        updateHourCondition(data);
     }
 
     function updateCurrentView(data){
@@ -30,7 +33,25 @@
                 </div>
             </div> 
         </div>`;
+    }
+
+
+
+    function updateHourCondition(data){
+        let html="";
+        for(let hourNum = 0; hourNum <= 24; hourNum++){
+            html += createHourCondition(hourNum, data);
+            hourCondition.innerHTML = html;
         }
+        return html;
+    }
+
+    function createHourCondition(hourNum, data){
+        const hour = hourNum + "H00";
+        const eachHour = data.fcst_day_0.hourly_data + $hour.TMP2m;
+        // let eachHourData = eachHour + "TMP2m";
+        return `<div class="bg-dark hour text-center text-white">${hour}\r ${eachHour}</div>`;
+    }
 
     function updateForecastView(data){
         let html = "";
@@ -83,9 +104,10 @@
     // function testCity(){
     //     fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
     //         .then(res => res.json())
-    //         .then(data => console.log(data))
+    //         .then(cityList => console.log(cityList))
     //         .catch(err => handleError(err));
     // }
 
-    // console.log(data.Object)
+    // console.log(cityList.Object)
 
+    
