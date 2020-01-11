@@ -1,4 +1,5 @@
     const forecastList = document.getElementById('forecast-list');
+    const hourCondition = document.getElementById('hourCondition');
 
     function updateWeather(myCity){
             fetch(`https://www.prevision-meteo.ch/services/json/${myCity}`)
@@ -10,17 +11,19 @@
 
     function updateView(data){
         let html = "";
+        // const hourData = [];
+        // hourData.push(data.fcst_day_0.hourly_data);
         html += updateCurrentView(data);
         html += updateForecastView(data);
-
         forecastList.innerHTML = html;
+        updateHourCondition(data);
     }
 
     function updateCurrentView(data){
         return `
         <div class="carousel-item active d-flex">
             <div class="card d-block w-100 bg-dark text-white text-center">
-                <img id ="icon" src="${data.current_condition.icon_big}" class="card-img-top" alt="condition météo">
+                <img src="${data.current_condition.icon_big}" class="card-img-top icon" alt="condition météo">
                     <p id="city-condition" class="card-text text-center">${data.current_condition.condition}</p>
                 <div class="card-body">
                     <h3 class="card-title text-center">${data.city_info.name}</h3>
@@ -30,7 +33,35 @@
                 </div>
             </div> 
         </div>`;
+    }
+
+
+
+    function updateHourCondition(data){
+        let html="";
+        let actualHour = new Date();
+        
+        for(let hourNum = actualHour.getHours(); hourNum < 24; hourNum++){
+            html += createHourCondition(hourNum, data);
+            hourCondition.innerHTML = html;
         }
+        return html;
+    }
+
+    function createHourCondition(hourNum, data){
+        const hour = hourNum + "H00";
+        let eachHourlyData = data.fcst_day_0.hourly_data[hour];
+        let eachTemp = eachHourlyData['TMP2m'];
+        let eachCondition = eachHourlyData['CONDITION'];
+        let eachIcon = eachHourlyData['ICON'];
+        return `
+                <div class="hour bg-dark text-center text-white">
+                    <p>${hour}</p>
+                    <p>${eachTemp}°C</p>
+                    <img class="smallIcon" src="${eachIcon}">
+                    <p>${eachCondition}</p>
+                </div>`;
+    }
 
     function updateForecastView(data){
         let html = "";
@@ -46,7 +77,7 @@
         return `
         <div class="carousel-item">
             <div class="card d-block w-100 bg-dark text-white text-center">
-                <img id ="icond2" src="${dayData.icon}" class="card-img-top" alt="condition météo">
+                <img src="${dayData.icon}" class="card-img-top icon" alt="condition météo">
                 <p id="city-conditiond2" class="card-text text-center">${dayData.condition}</p>
                 <div class="card-body">
                     <h3 class="card-title text-center">${data.city_info.name}</h3>
@@ -83,9 +114,10 @@
     // function testCity(){
     //     fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
     //         .then(res => res.json())
-    //         .then(data => console.log(data))
+    //         .then(cityList => console.log(cityList))
     //         .catch(err => handleError(err));
     // }
 
-    // console.log(data.Object)
+    // console.log(cityList.Object)
 
+    
