@@ -23,7 +23,7 @@
         return `
         <div class="carousel-item active d-flex">
             <div class="card d-block w-100 bg-dark text-white text-center">
-                <img id ="icon" src="${data.current_condition.icon_big}" class="card-img-top" alt="condition météo">
+                <img src="${data.current_condition.icon_big}" class="card-img-top icon" alt="condition météo">
                     <p id="city-condition" class="card-text text-center">${data.current_condition.condition}</p>
                 <div class="card-body">
                     <h3 class="card-title text-center">${data.city_info.name}</h3>
@@ -39,7 +39,9 @@
 
     function updateHourCondition(data){
         let html="";
-        for(let hourNum = 0; hourNum <= 24; hourNum++){
+        let actualHour = new Date();
+        
+        for(let hourNum = actualHour.getHours(); hourNum < 24; hourNum++){
             html += createHourCondition(hourNum, data);
             hourCondition.innerHTML = html;
         }
@@ -48,9 +50,17 @@
 
     function createHourCondition(hourNum, data){
         const hour = hourNum + "H00";
-        const eachHour = data.fcst_day_0.hourly_data + $hour.TMP2m;
-        // let eachHourData = eachHour + "TMP2m";
-        return `<div class="bg-dark hour text-center text-white">${hour}\r ${eachHour}</div>`;
+        let eachHourlyData = data.fcst_day_0.hourly_data[hour];
+        let eachTemp = eachHourlyData['TMP2m'];
+        let eachCondition = eachHourlyData['CONDITION'];
+        let eachIcon = eachHourlyData['ICON'];
+        return `
+                <div class="hour bg-dark text-center text-white">
+                    <p>${hour}</p>
+                    <p>${eachTemp}°C</p>
+                    <img class="smallIcon" src="${eachIcon}">
+                    <p>${eachCondition}</p>
+                </div>`;
     }
 
     function updateForecastView(data){
@@ -67,7 +77,7 @@
         return `
         <div class="carousel-item">
             <div class="card d-block w-100 bg-dark text-white text-center">
-                <img id ="icond2" src="${dayData.icon}" class="card-img-top" alt="condition météo">
+                <img src="${dayData.icon}" class="card-img-top icon" alt="condition météo">
                 <p id="city-conditiond2" class="card-text text-center">${dayData.condition}</p>
                 <div class="card-body">
                     <h3 class="card-title text-center">${data.city_info.name}</h3>
