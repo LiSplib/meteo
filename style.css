@@ -36,7 +36,7 @@ footer{
 #hourCondition{
     flex-direction: row;
     overflow-x: auto;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 #dayInfo{
