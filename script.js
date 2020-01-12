@@ -41,8 +41,15 @@
         
         for(let hourNum = actualHour.getHours(); hourNum < 24; hourNum++){
             html += createHourCondition(hourNum, data);
+            if(hourNum > 18){
+                hourCondition.className += ' justify-content-center';
+                }
+                else{
+                    hourCondition.className += ' justify-content-between';
+                };
             hourCondition.innerHTML = html;
         }
+        
         return html;
     }
 
@@ -52,6 +59,7 @@
         let eachTemp = eachHourlyData['TMP2m'];
         let eachCondition = eachHourlyData['CONDITION'];
         let eachIcon = eachHourlyData['ICON'];
+         
         return `
                 <div class="hour bg-dark text-center text-white">
                     <p>${hour}</p>
@@ -92,8 +100,8 @@
     }
 
 
-    let currentCity = 'Toulon';
-    let myCity = currentCity;
+    let defaultCity = 'Toulon';
+    let myCity = defaultCity;
 
     updateWeather(myCity);
 
@@ -108,25 +116,33 @@
         updateWeather(myCity);
     }
 
-    // function testCity(){
-    //     fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
-    //         .then(res => res.json())
-    //         .then(data => updateCityList(data))
-    //         .catch(err => handleError(err));
-    // }
+//     function async testCity(){
+//         fetch(`https://cors-anywhere.herokuapp.com/https://www.prevision-meteo.ch/services/json/list-cities/fr`)
+//             .then(res => res.json())
+//             .then(data => createCityList(data))
+//             .catch(err => handleError(err));
+//     }
 
-    // let villes = [];
+//     let villes = [];
 
-    // function updateCityList(data){
-    //         for(let city of data.toString()){
-    //             if(city.country === 'FRA'){
-    //                 return villes.push(city);
-    //             }
-    //         }
-    // }   
+//     function createCityList(data){
+//             for(let index in data){
+//                 if(data[index].country == 'FRA'){
+//                   const cityURL = data[index].name.toLowerCase();
+//                 //   const inputSearch = myCity.value.toLowerCase();
+//                 //    let bool = cityURL.startsWith(inputSearch);
+//                     //   if (cityURL.startsWith(inputSearch)) {
+//                             let values = {};
+//                             values.name = cityURL;
+//                             values.url = data[index].url;
+//                             villes.push(values);
+//                         // }
+//                 }                            
+//             }
+//     }   
     
-    // updateCityList(data);
-
-    // console.log(villes)
+//     // updateCityList(data);
+// testCity();
+//     console.log(villes)
 
     
