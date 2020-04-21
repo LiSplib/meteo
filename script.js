@@ -100,7 +100,7 @@
     }
 
 
-    let defaultCity = 'Toulon';
+    let defaultCity = 'Valette-du-Var';
     let myCity = defaultCity;
 
     updateWeather(myCity);
